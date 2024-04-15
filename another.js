@@ -15,6 +15,7 @@ function generateCombinationsAndCheck(length, targetString) {
   }
 
   for (let i = 1; i <= length; i++) {
+    console.log(`Generating combinations of length ${i}`)
     generateAndCheck('', i)
   }
 }
@@ -37,4 +38,4 @@ function decodeAndCheck(combination, targetString) {
   return run([...combination], '') === targetString
 }
 
-generateCombinationsAndCheck(15, 'bricklehampton')
+generateCombinationsAndCheck(15, 'targetString')
