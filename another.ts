@@ -14,10 +14,10 @@ function run(script: string[], word: string) {
 }
 
 function generateCombosAndCheck(
-  minLength: number,
-  maxLength: number,
-  inputString: string,
-  targetString: string
+  minLength: number = 1,
+  maxLength: number = 30,
+  inputString: string = 'tlibcheaomkpnr',
+  targetString: string = 'bricklehampton'
 ) {
   const characters: string[] = ['l', 'r', '!']
 
@@ -40,4 +40,4 @@ function generateCombosAndCheck(
   }
 }
 
-generateCombosAndCheck(17, 30, 'tlibcheaomkpnr', 'bricklehampton')
+generateCombosAndCheck(20, 30)
