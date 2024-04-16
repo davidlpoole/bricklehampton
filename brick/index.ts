@@ -14,17 +14,18 @@ function getUserInput() {
   process.stdout.write(clearCode)
 
   const result = run([...script], initial)
-  console.log(result + '\n')
+  console.log('script:', script + '\n')
+  console.log('result:', result + '\n')
 
   const msg = 'Please enter your input (l/r/1): '
   rl.question(msg, (input) => {
-    if (input === '1') input = '!'
-    if (input !== '' || result === target) {
-      script += input
-      getUserInput()
+    input = input.replace('1', '!')
+    if (input === '') {
+      script = script.slice(0, -1)
     } else {
-      rl.close()
+      script += input
     }
+    getUserInput()
   })
 }
 
