@@ -8,7 +8,7 @@
       body {
         background-color: #212121;
         color: #ffffff;
-        font-family: Arial, sans-serif;
+        font-family: 'Courier New', Courier, monospace;
       }
       #app {
         max-width: 400px;
@@ -43,22 +43,39 @@
       p {
         margin: 10px 0;
       }
+      #explanation {
+        background-color: #333333;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
     <div id="app">
       <div>
-        <label for="inputField"
-          >Enter 'l', 'r', or '!' (or leave it empty to undo):
-        </label>
+        What is a value for script so that the result equals 'bricklehampton'?
+        <label for="inputField"> </label>
         <input type="text" id="inputField" />
       </div>
       <div>
-        <button id="submitButton">Submit</button>
+        <button id="submitButton">Add to script</button>
       </div>
       <div>
         <p>Script: <span id="scriptDisplay"></span></p>
         <p>Result: <span id="resultDisplay"></span></p>
+      </div>
+      <div id="explanation">
+        <p><strong>Instructions:</strong></p>
+        <ul>
+          <li>'l' to move the first character to the end,</li>
+          <li>'r' to move the last character to the start,</li>
+          <li>or '!' to reverse the first four characters.</li>
+        </ul>
+        <p>
+          Enter any number of characters (l/r/!) to add to the script (or leave
+          it empty to remove a character)
+        </p>
       </div>
     </div>
 
@@ -90,7 +107,9 @@
 
       function updateDisplay() {
         scriptDisplay.textContent = script
-        resultDisplay.textContent = run([...script], initial)
+        const result = run([...script], initial)
+        resultDisplay.textContent = result
+        document.title = result
       }
 
       updateDisplay()
