@@ -1,8 +1,9 @@
 import * as readline from 'readline'
 
 let script = ''
-let initial = 'tlibcheaomkpnr'
-let target = 'bricklehampton'
+let initial = 'bacdefgh'
+// let initial = 'tlibcheaomkpnr'
+// let target = 'bricklehampton'
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -19,7 +20,7 @@ function getUserInput() {
 
   const msg = 'Please enter your input (l/r/1): '
   rl.question(msg, (input) => {
-    input = input.replace('1', '!')
+    input = input.replace(/1/g, '!')
     if (input === '') {
       script = script.slice(0, -1)
     } else {
