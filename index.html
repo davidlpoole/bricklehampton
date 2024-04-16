@@ -2,23 +2,115 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=100%, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bricklehampton</title>
+    <style>
+      body {
+        background-color: #212121;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+      }
+      #app {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #424242;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      }
+      input[type='text'] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #616161;
+        color: #ffffff;
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      #submitButton {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #1976d2;
+        color: #ffffff;
+        cursor: pointer;
+      }
+      #submitButton:hover {
+        background-color: #1565c0;
+      }
+      p {
+        margin: 10px 0;
+      }
+    </style>
   </head>
-  <body
-    style="
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-        Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
-        sans-serif;
-    "
-  >
-    <div id="root">
-      <div id="script"><b>script:&Tab;</b></div>
-      <div id="input"><b>input:</b>&Tab;</div>
-      <div id="expected"><b>expected:</b>&Tab;</div>
-      <div id="output"><b>actual:</b>&Tab;</div>
-      <div id="result"><b>match?</b>&Tab;</div>
+  <body>
+    <div id="app">
+      <div>
+        <label for="inputField"
+          >Enter 'l', 'r', or '!' (or leave it empty to undo):
+        </label>
+        <input type="text" id="inputField" />
+      </div>
+      <div>
+        <button id="submitButton">Submit</button>
+      </div>
+      <div>
+        <p>Script: <span id="scriptDisplay"></span></p>
+        <p>Result: <span id="resultDisplay"></span></p>
+      </div>
     </div>
+
+    <script>
+      const scriptDisplay = document.getElementById('scriptDisplay')
+      const resultDisplay = document.getElementById('resultDisplay')
+      const inputField = document.getElementById('inputField')
+      const submitButton = document.getElementById('submitButton')
+
+      let script = ''
+      // let initial = 'bacdefgh'
+      let initial = 'tlibcheaomkpnr'
+      // let target = 'bricklehampton';
+
+      function run(script, word) {
+        return script.reduce(function (word, i) {
+          switch (i) {
+            case 'l':
+              return word.slice(1) + word[0]
+            case 'r':
+              return word.slice(-1) + word.slice(0, -1)
+            case '!':
+              return word[3] + word[2] + word[1] + word[0] + word.slice(4)
+            default:
+              return word
+          }
+        }, word)
+      }
+
+      function updateDisplay() {
+        scriptDisplay.textContent = script
+        resultDisplay.textContent = run([...script], initial)
+      }
+
+      updateDisplay()
+
+      submitButton.addEventListener('click', function () {
+        const input = inputField.value.trim().replace(/1/g, '!')
+        if (input === '') {
+          script = script.slice(0, -1)
+        } else {
+          script += input
+        }
+        inputField.value = '' // Clear input field
+        updateDisplay()
+      })
+
+      inputField.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+          submitButton.click()
+        }
+      })
+    </script>
   </body>
-  <script src="index.js"></script>
 </html>
