@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bricklehampton</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <label for="inputField"
+          >Enter 'l', 'r', or '!' (or leave it empty to undo):
+        </label>
+        <input type="text" id="inputField" />
+      </div>
+      <div>
+        <button id="submitButton">Submit</button>
+      </div>
+      <div>
+        <p>Script: <span id="scriptDisplay"></span></p>
+        <p>Result: <span id="resultDisplay"></span></p>
+      </div>
+    </div>
+
+    <script>
+      const scriptDisplay = document.getElementById('scriptDisplay')
+      const resultDisplay = document.getElementById('resultDisplay')
+      const inputField = document.getElementById('inputField')
+      const submitButton = document.getElementById('submitButton')
+
+      let script = ''
+      let initial = 'bacdefgh'
+      // let initial = 'tlibcheaomkpnr';
+      // let target = 'bricklehampton';
+
+      function run(script, word) {
+        return script.reduce(function (word, i) {
+          switch (i) {
+            case 'l':
+              return word.slice(1) + word[0]
+            case 'r':
+              return word.slice(-1) + word.slice(0, -1)
+            case '!':
+              return word[3] + word[2] + word[1] + word[0] + word.slice(4)
+            default:
+              return word
+          }
+        }, word)
+      }
+
+      function updateDisplay() {
+        scriptDisplay.textContent = script
+        resultDisplay.textContent = run([...script], initial)
+      }
+
+      updateDisplay()
+
+      submitButton.addEventListener('click', function () {
+        const input = inputField.value.trim().replace(/1/g, '!')
+        if (input === '') {
+          script = script.slice(0, -1)
+        } else {
+          script += input
+        }
+        inputField.value = '' // Clear input field
+        updateDisplay()
+      })
+    </script>
+  </body>
+</html>
